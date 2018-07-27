@@ -2,16 +2,17 @@ window.onload = function() {
     let elements = document.getElementsByClassName('innerelems');
     let elemArray = [];
     let i=0;
-    let elemPos = elements.length-1
-    var empty = elements[elemPos]
+    let elemPos = elements.length-1;
+    var empty = elements[elemPos];
     while(i<elements.length-1){
-        let rand = Math.floor(Math.random()* Math.floor(15));
+        let rand = Math.floor(Math.random()* (16 - 1)+1);
         if(elemArray.indexOf(rand) == -1){
             elemArray.push(rand);
             elements[i].innerHTML = rand;
             i++;
         }            
     }
+    elemArray[elemPos] = 0;
     window.addEventListener('keyup',function(event){
         let keycode = event.which || event.keycode;
         if(keycode == 37){
@@ -33,7 +34,7 @@ window.onload = function() {
                 let element2 = elements[elemPos-4].cloneNode(true);
                 elements[elemPos-4].parentNode.replaceChild(element1,elements[elemPos-4]);
                 empty.parentNode.replaceChild(element2,empty);
-                swapElements(elemArray,elemPos-1,elemPos-4);
+                swapElements(elemArray,elemPos,elemPos-4);
                 elemPos = elemPos-4;
                 empty=elements[elemPos];
             }
