@@ -1,13 +1,23 @@
-window.onload = function() {
+function Initialise() {
+    if (document.contains(document.getElementsByClassName("sliding-row")[0])) {
+        document.getElementsByClassName("sliding-row")[0].remove();
+    } 
+    let baseRect = createElement('sliding-row');
+    document.getElementsByTagName('body')[0].appendChild(baseRect);
     let elements = document.getElementsByClassName('innerelems');
     let elemArray = [];
-    let i=0;
-    let numberOfRows = 4;
-    let numberOfColumns = 5;
+    
+    let numberOfRows = parseInt(document.getElementById('numRows').value);
+    let numberOfColumns = parseInt(document.getElementById('numCols').value);
+
     createGrid(numberOfRows,numberOfColumns);
-    let numberOfElements = numberOfRows * numberOfColumns
+    let numberOfElements = numberOfRows * numberOfColumns;
+
     let elemPos = elements.length-1;
     var empty = elements[elemPos];
+
+
+    let i=0;
     while(i<elements.length-1){
         let rand = Math.floor(Math.random()* (numberOfElements - 1)+1);
         if(elemArray.indexOf(rand) == -1){
@@ -69,7 +79,11 @@ window.onload = function() {
   };
 
   
-
+  function createElement(className){
+    let element = document.createElement('div');
+    element.setAttribute('class',className);
+    return element;
+  }
  
 
 
@@ -77,8 +91,7 @@ window.onload = function() {
     let slidingRow = document.getElementsByClassName('sliding-row')[0];
     slidingRow.style.height = (numberOfRows * 75) + 'px';
     for(let index = 0;index<numberOfRows;index++){
-        let element = document.createElement('div');
-        element.setAttribute('class','rows');
+        let element = createElement('rows');
         slidingRow.appendChild(element);
     }
     let rows = document.getElementsByClassName('rows');
@@ -86,8 +99,7 @@ window.onload = function() {
     width = width + '%';
     for(let rowIndex = 0;rowIndex<rows.length;rowIndex++){
         for(let index = 0;index < numberOfColumns;index++){
-            let element = document.createElement('div');
-            element.setAttribute('class','innerelems');
+            let element = createElement('innerelems');
             element.style.flexBasis = width;
             rows[rowIndex].appendChild(element);
         }
