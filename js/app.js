@@ -1,7 +1,9 @@
-function Initialise() {
+var Initialise = function() {
     if (document.contains(document.getElementsByClassName("sliding-row")[0])) {
         document.getElementsByClassName("sliding-row")[0].remove();
+        
     } 
+    
     let baseRect = createElement('sliding-row');
     document.getElementsByTagName('body')[0].appendChild(baseRect);
     let elements = document.getElementsByClassName('innerelems');
@@ -27,56 +29,63 @@ function Initialise() {
         }            
     }
     elemArray[elemPos] = 0;
-    window.addEventListener('keyup',function(event){
+    function trigger(event){
         let keycode = event.which || event.keycode;
-        if(keycode == 37){
-            if(elemPos %numberOfColumns !=0){
-                let element1 = empty.cloneNode(true);
-                let element2 = elements[elemPos-1].cloneNode(true);
-                elements[elemPos-1].parentNode.replaceChild(element1,elements[elemPos-1]);
-                empty.parentNode.replaceChild(element2,empty);
-                swapElements(elemArray,elemPos,elemPos-1);
-                elemPos = elemPos-1;
-                empty=elements[elemPos];
-                
+            if(keycode == 37){
+                if(elemPos %numberOfColumns !=0){
+                    let element1 = empty.cloneNode(true);
+                    let element2 = elements[elemPos-1].cloneNode(true);
+                    elements[elemPos-1].parentNode.replaceChild(element1,elements[elemPos-1]);
+                    empty.parentNode.replaceChild(element2,empty);
+                    swapElements(elemArray,elemPos,elemPos-1);
+                    elemPos = elemPos-1;
+                    empty=elements[elemPos];                
+                }            
             }
-            
-        }
-        if(keycode == 38){
-            if(elemPos >= numberOfColumns){
-                let element1 = empty.cloneNode(true);
-                let element2 = elements[elemPos-4].cloneNode(true);
-                elements[elemPos-numberOfColumns].parentNode.replaceChild(element1,elements[elemPos-numberOfColumns]);
-                empty.parentNode.replaceChild(element2,empty);
-                swapElements(elemArray,elemPos,elemPos-numberOfColumns);
-                elemPos = elemPos-numberOfColumns;
-                empty=elements[elemPos];
+            if(keycode == 38){
+                if(elemPos >= numberOfColumns){
+                    let element1 = empty.cloneNode(true);
+                    let element2 = elements[elemPos-4].cloneNode(true);
+                    elements[elemPos-numberOfColumns].parentNode.replaceChild(element1,elements[elemPos-numberOfColumns]);
+                    empty.parentNode.replaceChild(element2,empty);
+                    swapElements(elemArray,elemPos,elemPos-numberOfColumns);
+                    elemPos = elemPos-numberOfColumns;
+                    empty=elements[elemPos];
+                }
             }
-        }
-        if(keycode == 39){
-            if((elemPos+1) %numberOfColumns !=0){
-                let element1 = empty.cloneNode(true);
-                let element2 = elements[elemPos+1].cloneNode(true);
-                elements[elemPos+1].parentNode.replaceChild(element1,elements[elemPos+1]);
-                empty.parentNode.replaceChild(element2,empty);
-                swapElements(elemArray,elemPos,elemPos+1);
-                elemPos = elemPos+1;
-                empty=elements[elemPos];
+            if(keycode == 39){
+                if((elemPos+1) %numberOfColumns !=0){
+                    let element1 = empty.cloneNode(true);
+                    let element2 = elements[elemPos+1].cloneNode(true);
+                    elements[elemPos+1].parentNode.replaceChild(element1,elements[elemPos+1]);
+                    empty.parentNode.replaceChild(element2,empty);
+                    swapElements(elemArray,elemPos,elemPos+1);
+                    elemPos = elemPos+1;
+                    empty=elements[elemPos];
+                }
             }
-        }
-        if(keycode == 40){
-            if(elements.length-numberOfColumns > elemPos){
-                let element1 = empty.cloneNode(true);
-                let element2 = elements[elemPos+numberOfColumns].cloneNode(true);
-                elements[elemPos+numberOfColumns].parentNode.replaceChild(element1,elements[elemPos+numberOfColumns]);
-                empty.parentNode.replaceChild(element2,empty);
-                swapElements(elemArray,elemPos,elemPos+numberOfColumns);
-                elemPos = elemPos+numberOfColumns;
-                empty=elements[elemPos];
+            if(keycode == 40){
+                if(elements.length-numberOfColumns > elemPos){
+                    let element1 = empty.cloneNode(true);
+                    let element2 = elements[elemPos+numberOfColumns].cloneNode(true);
+                    elements[elemPos+numberOfColumns].parentNode.replaceChild(element1,elements[elemPos+numberOfColumns]);
+                    empty.parentNode.replaceChild(element2,empty);
+                    swapElements(elemArray,elemPos,elemPos+numberOfColumns);
+                    elemPos = elemPos+numberOfColumns;
+                    empty=elements[elemPos];
+                }
             }
+    }
+    
+    return{
+        trigger:trigger      
         }
-    });
-  };
+  }
+  window.onload = function(){
+    window.addEventListener('keyup', Initialise().trigger,false);
+  }
+  
+  
 
   
   function createElement(className){
@@ -113,5 +122,3 @@ function Initialise() {
       arr[first] = arr[second];
       arr[second] = temp;
   }
-
-  
